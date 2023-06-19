@@ -20,7 +20,7 @@ void main() async {
     theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.blue,
-        hintColor: Colors.cyan),
+        hintColor: Colors.grey),
     home: MyApp(title: 'Note Edit Address'),
   ));
 }
@@ -130,204 +130,312 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text("Note"),
         ),
-        body: Padding(
+        body: ListView(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Nama",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String namaAdd) {
-                    getNama(namaAdd);
-                  },
+          children: [
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Nama"),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Kategori",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String kategoriAdd) {
-                    getKategori(kategoriAdd);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Provinsi",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String provinsiAdd) {
-                    getProvinsi(provinsiAdd);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Kecamatan",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String kecamatanAdd) {
-                    getKecamatan(kecamatanAdd);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "Kode Pos",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String kodePos) {
-                    getKodePos(kodePos);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "RT",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String rtAdd) {
-                    getRt(rtAdd);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "RW",
-                      fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  onChanged: (String rwAdd) {
-                    getRw(rwAdd);
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                      onPressed: () {
-                        createData();
-                      },
-                      child: const Text("Create")),
-                  ElevatedButton(
-                      onPressed: () {
-                        readData();
-                      },
-                      child: const Text("Read")),
-                  ElevatedButton(
-                      onPressed: () {
-                        updateData();
-                      },
-                      child: const Text("Update")),
-                  ElevatedButton(
-                      onPressed: () {
-                        deleteData();
-                      },
-                      child: const Text("Delete"))
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  textDirection: TextDirection.ltr,
-                  children: const <Widget>[
-                    Expanded(
-                      child: Text("Nama"),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Nama',
                     ),
-                    Expanded(
-                      child: Text("Kategori"),
-                    ),
-                    Expanded(
-                      child: Text("Provinsi"),
-                    ),
-                    Expanded(
-                      child: Text("Kecamatan"),
-                    ),
-                    Expanded(
-                      child: Text("Kode Pos"),
-                    ),
-                    Expanded(
-                      child: Text("RT"),
-                    ),
-                    Expanded(
-                      child: Text("RW"),
-                    ),
-                  ],
+                    onChanged: (String namaAdd) {
+                      getNama(namaAdd);
+                    },
+                  ),
                 ),
-              ),
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("MyAddress")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot documentSnapshot =
-                              snapshot.data!.docs[index];
-                          return Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(documentSnapshot["Nama"]),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Kategori"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Kategori',
+                    ),
+                    onChanged: (String kategoriAdd) {
+                      getKategori(kategoriAdd);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Provinsi"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Provinsi',
+                    ),
+                    onChanged: (String provinsiAdd) {
+                      getProvinsi(provinsiAdd);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Kecamatan"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Kecamatan',
+                    ),
+                    onChanged: (String kecamatanAdd) {
+                      getKecamatan(kecamatanAdd);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Kode Pos"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'Kode Pos',
+                    ),
+                    onChanged: (String kodePos) {
+                      getKodePos(kodePos);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("RT"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'RT',
+                    ),
+                    onChanged: (String rtAdd) {
+                      getRt(rtAdd);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("RW"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey)),
+                      hintText: 'RW',
+                    ),
+                    onChanged: (String rwAdd) {
+                      getRw(rwAdd);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          createData();
+                        },
+                        child: const Text("Simpan")),
+                  ),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(16.0),
+                //   child: Row(
+                //     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: <Widget>[
+                //       Align(
+                //         alignment: Alignment.centerRight,
+                //         child: ElevatedButton(
+                //           onPressed: () {
+                //             createData();
+                //           },
+                //           child: const Text("Simpan")),
+                //       ),
+                //       // ElevatedButton(
+                //       //     onPressed: () {
+                //       //       readData();
+                //       //     },
+                //       //     child: const Text("Read")),
+                //       // ElevatedButton(
+                //       //     onPressed: () {
+                //       //       updateData();
+                //       //     },
+                //       //     child: const Text("Update"))
+                //     ],
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    textDirection: TextDirection.ltr,
+                    children: const <Widget>[
+                      Expanded(
+                        child: Text(
+                          "Nama",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Kategori",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Provinsi",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Kecamatan",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Kode Pos",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "RT",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "RW",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Delete",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Color.fromARGB(255, 184, 184, 184),
+                  indent: 5.0,
+                  endIndent: 10.0,
+                  thickness: 1.5,
+                ),
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("MyAddress")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot documentSnapshot =
+                                snapshot.data!.docs[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Text(documentSnapshot["Nama"]),
+                                  ),
+                                  Expanded(
+                                    child: Text(documentSnapshot["Kategori"]),
+                                  ),
+                                  Expanded(
+                                    child: Text(documentSnapshot["Provinsi"]),
+                                  ),
+                                  Expanded(
+                                    child: Text(documentSnapshot["Kecamatan"]),
+                                  ),
+                                  Expanded(
+                                    child: Text(documentSnapshot["Kode Pos"]
+                                        .toString()),
+                                  ),
+                                  Expanded(
+                                    child:
+                                        Text(documentSnapshot["RT"].toString()),
+                                  ),
+                                  Expanded(
+                                    child:
+                                        Text(documentSnapshot["RW"].toString()),
+                                  ),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          deleteData();
+                                        },
+                                        child: const Text("Delete")),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Text(documentSnapshot["Kategori"]),
-                              ),
-                              Expanded(
-                                child: Text(documentSnapshot["Provinsi"]),
-                              ),
-                              Expanded(
-                                child: Text(documentSnapshot["Kecamatan"]),
-                              ),
-                              Expanded(
-                                child: Text(
-                                    documentSnapshot["Kode Pos"].toString()),
-                              ),
-                              Expanded(
-                                child: Text(documentSnapshot["RT"].toString()),
-                              ),
-                              Expanded(
-                                child: Text(documentSnapshot["RW"].toString()),
-                              ),
-                            ],
-                          );
-                        });
-                  } else {
-                    return Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              )
-            ],
-          ),
+                            );
+                          });
+                    } else {
+                      return Align(
+                        alignment: FractionalOffset.bottomCenter,
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                )
+              ],
+            ),
+          ],
         ),
       );
     });
